@@ -205,9 +205,31 @@ execute_process(
 ### Some global compiler flags & other stuff
 ###
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG(-std=c++11 HAVE_STD11)
+    if(HAVE_STD11)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra")
+    else()
+        message(FATAL_ERROR "No advanced standard C++ support (-std=c++11 not defined) for GCC version.")
+    endif()
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG(-std=c++11 HAVE_STD11)
+    if(HAVE_STD11)
+        if(APPLE)
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++ -Wall -Wextra -Wno-missing-braces -Wno-unused-parameter -Wno-sign-compare -Wno-unused-private-field -Wno-mismatched-tags -U__STRICT_ANSI__")
+        else()
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra")
+        endif()
+    else()
+        message(FATAL_ERROR "No C++11 support for Clang version. Please upgrade Clang to a version supporting C++11.")
+    endif()
 endif()
+
+message(STATUS "C++ Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "C++ Flags:       ${CMAKE_CXX_FLAGS}")
+message(STATUS "C++ link flags:  ${CMAKE_CXX_LINK_FLAGS}")
 
 #SET(CMAKE_EXE_LINKER_FLAGS "/DEBUG")
 
