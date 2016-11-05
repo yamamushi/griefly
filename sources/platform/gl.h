@@ -7,3 +7,9 @@
  #include <GL/gl.h>
  #include <GL/glu.h>
 #endif // Linux
+
+#if defined(__APPLE__)
+ #include <OpenGL/gl.h>
+ #include <OpenGL/glu.h>
+// #include <GLUT/glut.h>
+#endif // Apple

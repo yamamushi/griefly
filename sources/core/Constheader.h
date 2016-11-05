@@ -76,16 +76,18 @@ inline Dir VDirToDir(const VDir& vdir)
     int abs_x = std::abs(vdir.x);
     int abs_y = std::abs(vdir.y);
     int abs_z = std::abs(vdir.z);
-    if (abs_x > abs_y && abs_x > abs_z)
+    if (abs_x > abs_y && abs_x > abs_z) {
         if (vdir.x > 0)
             return D_RIGHT;
         else
             return D_LEFT;
-    if (abs_y > abs_z)
+    }
+    if (abs_y > abs_z) {
         if (vdir.y > 0)
             return D_DOWN;
         else
             return D_UP;
+    }
 
     if (vdir.z > 0)
         return D_ZUP;

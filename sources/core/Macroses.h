@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #define __forceinline __attribute__((always_inline)) inline
 #endif
 
@@ -8,7 +8,7 @@
 
 #define ADD_TO_TYPELIST(classname)                                              \
 
-class NotLoadItem {} const nouse;
+class NotLoadItem {} const nouse {};
 
 template<int>
 struct FakeParamClass {};

@@ -309,6 +309,8 @@ endif()
 # Add opengl lib
 if(WIN32)
     target_link_libraries(KVEngine opengl32)
+elseif(APPLE)
+    set(CMAKE_CXX_LINK_FLAGS "-framework OpenGL")
 else()
     target_link_libraries(KVEngine GL)
 endif()

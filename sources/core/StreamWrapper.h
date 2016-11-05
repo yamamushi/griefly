@@ -6,9 +6,14 @@
 #include <vector>
 
 #include <QDebug>
+#include <iostream>
+#include <vector>
 
-#include "Constheader.h"
 #include "Idptr.h"
+#include "Constheader.h"
+
+std::ostream& operator<<(std::stringstream& file, const std::vector<int> & content);
+std::istream& operator>>(std::stringstream& file, std::vector<int> & content);
 
 template<class T>
 inline std::stringstream& WrapWriteMessage(std::stringstream& file, T& to_write)
